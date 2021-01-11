@@ -1,6 +1,9 @@
 package org.jacis.examples.resourcemanager.resource.entity;
 
-public class Resource {
+import org.jacis.plugin.objectadapter.cloning.JacisCloneable;
+import org.jacis.plugin.readonly.object.AbstractReadOnlyModeSupportingObject;
+
+public class Resource extends AbstractReadOnlyModeSupportingObject implements JacisCloneable<Resource> {
 
   private long id;
   private ResourceType type;
@@ -12,6 +15,11 @@ public class Resource {
     this.id = id;
     this.type = type;
     this.description = description;
+  }
+
+  @Override
+  public Resource clone() {
+    return (Resource) super.clone();
   }
 
   @Override

@@ -1,5 +1,7 @@
 package org.jacis.examples.resourcemanager.resource.boundary;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,6 +24,12 @@ public class ResourceEndpoint {
   @Path("{id}")
   public Resource find(@PathParam("id") long registrationId) {
     return resources.find(registrationId);
+  }
+
+  @GET
+  @Path("all")
+  public List<Resource> all() {
+    return resources.all();
   }
 
 }
