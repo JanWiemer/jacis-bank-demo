@@ -1,104 +1,86 @@
 
 package org.jacis.examples.resourcemanager;
 
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
-
-import javax.json.Json;
-import javax.json.JsonBuilderFactory;
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.spi.CDI;
 import javax.json.JsonObject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import io.helidon.microprofile.server.Server;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.helidon.media.jsonp.JsonpSupport;
-import io.helidon.webclient.WebClient;
-import io.helidon.webserver.WebServer;
+class MainTest {
 
-public class MainTest {
+    private static Server server;
+    private static String serverUrl;
 
-  private static WebServer webServer;
-  private static WebClient webClient;
-  private static final JsonBuilderFactory JSON_BUILDER = Json.createBuilderFactory(Collections.emptyMap());
-  private static final JsonObject TEST_JSON_OBJECT;
-
-  static {
-    TEST_JSON_OBJECT = JSON_BUILDER.createObjectBuilder()
-        .add("greeting", "Hola")
-        .build();
-  }
-
-  @BeforeAll
-  public static void startTheServer() throws Exception {
-    webServer = Main.startServer();
-
-    long timeout = 2000; // 2 seconds should be enough to start the server
-    long now = System.currentTimeMillis();
-
-    while (!webServer.isRunning()) {
-      Thread.sleep(100);
-      if ((System.currentTimeMillis() - now) > timeout) {
-        Assertions.fail("Failed to start webserver");
-      }
+    @BeforeAll
+    public static void startTheServer() throws Exception {
+        server = Server.create().start();
+        serverUrl = "http://localhost:" + server.port();
     }
 
-    webClient = WebClient.builder()
-        .baseUri("http://localhost:" + webServer.port())
-        .addMediaSupport(JsonpSupport.create())
-        .build();
-  }
+    @Test
+    void testHelloWorld() {
+        Client client = ClientBuilder.newClient();
 
-  @AfterAll
-  public static void stopServer() throws Exception {
-    if (webServer != null) {
-      webServer.shutdown()
-          .toCompletableFuture()
-          .get(10, TimeUnit.SECONDS);
+        JsonObject jsonObject = client
+                .target(serverUrl)
+                .path("greet")
+                .request()
+                .get(JsonObject.class);
+        Assertions.assertEquals("Hello World!", jsonObject.getString("message"),
+                "default message");
+
+        jsonObject = client
+                .target(serverUrl)
+                .path("greet/Joe")
+                .request()
+                .get(JsonObject.class);
+        Assertions.assertEquals("Hello Joe!", jsonObject.getString("message"),
+                "hello Joe message");
+
+        Response r = client
+                .target(serverUrl)
+                .path("greet/greeting")
+                .request()
+                .put(Entity.entity("{\"greeting\" : \"Hola\"}", MediaType.APPLICATION_JSON));
+        Assertions.assertEquals(204, r.getStatus(), "PUT status code");
+
+        jsonObject = client
+                .target(serverUrl)
+                .path("greet/Jose")
+                .request()
+                .get(JsonObject.class);
+        Assertions.assertEquals("Hola Jose!", jsonObject.getString("message"),
+                "hola Jose message");
+
+        r = client
+                .target(serverUrl)
+                .path("metrics")
+                .request()
+                .get();
+        Assertions.assertEquals(200, r.getStatus(), "GET metrics status code");
+
+        r = client
+                .target(serverUrl)
+                .path("health")
+                .request()
+                .get();
+        Assertions.assertEquals(200, r.getStatus(), "GET health status code");
     }
-  }
 
-  @Test
-  public void testHelloWorld() throws Exception {
-    webClient.get()
-        .path("/greet")
-        .request(JsonObject.class)
-        .thenAccept(jsonObject -> Assertions.assertEquals("Hello World!", jsonObject.getString("message")))
-        .toCompletableFuture()
-        .get();
-
-    webClient.get()
-        .path("/greet/Joe")
-        .request(JsonObject.class)
-        .thenAccept(jsonObject -> Assertions.assertEquals("Hello Joe!", jsonObject.getString("message")))
-        .toCompletableFuture()
-        .get();
-
-    webClient.put()
-        .path("/greet/greeting")
-        .submit(TEST_JSON_OBJECT)
-        .thenAccept(response -> Assertions.assertEquals(204, response.status().code()))
-        .thenCompose(nothing -> webClient.get()
-            .path("/greet/Joe")
-            .request(JsonObject.class))
-        .thenAccept(jsonObject -> Assertions.assertEquals("Hola Joe!", jsonObject.getString("message")))
-        .toCompletableFuture()
-        .get();
-
-    webClient.get()
-        .path("/health")
-        .request()
-        .thenAccept(response -> Assertions.assertEquals(200, response.status().code()))
-        .toCompletableFuture()
-        .get();
-
-    webClient.get()
-        .path("/metrics")
-        .request()
-        .thenAccept(response -> Assertions.assertEquals(200, response.status().code()))
-        .toCompletableFuture()
-        .get();
-  }
-
+    @AfterAll
+    static void destroyClass() {
+        CDI<Object> current = CDI.current();
+        ((SeContainer) current).close();
+    }
 }

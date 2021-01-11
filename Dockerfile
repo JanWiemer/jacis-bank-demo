@@ -14,7 +14,6 @@ RUN mvn package -Dmaven.test.skip -Declipselink.weave.skip
 # Incremental docker builds will resume here when you change sources
 ADD src src
 RUN mvn package -DskipTests
-
 RUN echo "done!"
 
 # 2nd stage, build the runtime image
@@ -22,9 +21,9 @@ FROM openjdk:11-jre-slim
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
-COPY --from=build /helidon/target/resourcemanager.jar ./
+COPY --from=build /helidon/target/jacis-resourcemanager-demo.jar ./
 COPY --from=build /helidon/target/libs ./libs
 
-CMD ["java", "-jar", "resourcemanager.jar"]
+CMD ["java", "-jar", "jacis-resourcemanager-demo.jar"]
 
 EXPOSE 8080

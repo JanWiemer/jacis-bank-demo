@@ -22,8 +22,8 @@ FROM scratch
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
-COPY --from=build /helidon/target/resourcemanager .
+COPY --from=build /helidon/target/jacis-resourcemanager-demo .
 
-ENTRYPOINT ["./resourcemanager"]
+ENTRYPOINT ["./jacis-resourcemanager-demo"]
 
 EXPOSE 8080

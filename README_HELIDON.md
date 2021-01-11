@@ -1,9 +1,14 @@
-# Helidon Quickstart SE
+# Helidon Quickstart MP
 
-created with:
-mvn -U archetype:generate -DinteractiveMode=false -DarchetypeGroupId=io.helidon.archetypes -DarchetypeArtifactId=helidon-quickstart-se -DarchetypeVersion=2.2.0 -DgroupId=org.jacis.examples -DartifactId=resourcemanager -Dpackage=org.jacis.examples.resourcemanager
+Sample Helidon MP project that includes multiple REST operations.
 
-Sample Helidon SE project that includes multiple REST operations.
+## Install
+
+Created Repository with:
+
+```bash
+mvn -U archetype:generate -DinteractiveMode=false -DarchetypeGroupId=io.helidon.archetypes -DarchetypeArtifactId=helidon-quickstart-mp -DarchetypeVersion=2.2.0 -DgroupId=org.jacis.examples -DartifactId=jacis-resourcemanager-demo -Dpackage=org.jacis.examples.resourcemanager
+```
 
 ## Build and run
 
@@ -64,11 +69,11 @@ Exercise the application as described above
 ## Deploy the application to Kubernetes
 
 ```
-kubectl cluster-info                        # Verify which cluster
-kubectl get pods                            # Verify connectivity to cluster
-kubectl create -f app.yaml                  # Deploy application
-kubectl get pods                            # Wait for quickstart pod to be RUNNING
-kubectl get service helidon-quickstart-se   # Get service info
+kubectl cluster-info                         # Verify which cluster
+kubectl get pods                             # Verify connectivity to cluster
+kubectl create -f app.yaml                   # Deploy application
+kubectl get pods                             # Wait for quickstart pod to be RUNNING
+kubectl get service helidon-quickstart-mp    # Verify deployed service
 ```
 
 Note the PORTs. You can now exercise the application as you did before but use the second
@@ -92,8 +97,8 @@ You can build a native executable in 2 different ways:
 
 ### Local build
 
-Download Graal VM at https://www.graalvm.org/downloads, the versions
- currently supported for Helidon are `20.1.0` and above.
+Download Graal VM at https://www.graalvm.org/downloads, the version
+ currently supported for Helidon is `20.1.0`.
 
 ```
 # Setup the environment
@@ -127,6 +132,7 @@ Start the application:
 ```
 docker run --rm -p 8080:8080 resourcemanager-native:latest
 ```
+
 
 ## Build a Java Runtime Image using jlink
 
