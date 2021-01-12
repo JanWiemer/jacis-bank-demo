@@ -48,6 +48,7 @@ public class RoomResource {
     store.add(new Room(3, 4, true, "Ground Floor Room 3"));
     store.add(new Room(4, 4, true, "Ground Floor Room 4"));
     store.add(new Room(5, 4, true, "Ground Floor Room 5"));
+    store.add(new Room(6, 4, true, "Ground Floor Room 6"));
     return store.getAll();
   }
 
