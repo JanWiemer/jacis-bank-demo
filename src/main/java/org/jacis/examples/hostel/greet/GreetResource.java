@@ -1,5 +1,5 @@
 
-package org.jacis.examples.resourcemanager.greet;
+package org.jacis.examples.hostel.greet;
 
 import java.util.Collections;
 

@@ -1,4 +1,4 @@
-package org.jacis.examples.resourcemanager;
+package org.jacis.examples.hostel;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,16 +6,16 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import org.jacis.examples.resourcemanager.greet.GreetResource;
-import org.jacis.examples.resourcemanager.resource.boundary.ResourceEndpoint;
+import org.jacis.examples.hostel.greet.GreetResource;
+import org.jacis.examples.hostel.room.RoomResource;
 
 import io.helidon.microprofile.server.Server;
 
 @ApplicationPath("/")
-public class ResourceManagerApplication extends Application {
+public class HostelApplication extends Application {
 
   public static void main(String... args) {
-    Server server = Server.builder().addApplication(ResourceManagerApplication.class).port(9080).build();
+    Server server = Server.builder().addApplication(HostelApplication.class).port(9080).build();
     server.start();
   }
 
@@ -23,7 +23,7 @@ public class ResourceManagerApplication extends Application {
   public Set<Class<?>> getClasses() {
     Set<Class<?>> endpoints = new HashSet<>();
     endpoints.add(GreetResource.class);
-    endpoints.add(ResourceEndpoint.class);
+    endpoints.add(RoomResource.class);
     return endpoints;
   }
 

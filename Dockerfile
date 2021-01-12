@@ -21,9 +21,9 @@ FROM openjdk:11-jre-slim
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
-COPY --from=build /helidon/target/jacis-resourcemanager-demo.jar ./
+COPY --from=build /helidon/target/jacis-hostel-demo.jar ./
 COPY --from=build /helidon/target/libs ./libs
 
-CMD ["java", "-jar", "jacis-resourcemanager-demo.jar"]
+CMD ["java", "-jar", "jacis-hostel-demo.jar"]
 
 EXPOSE 8080

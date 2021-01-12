@@ -7,7 +7,7 @@ Sample Helidon MP project that includes multiple REST operations.
 Created Repository with:
 
 ```bash
-mvn -U archetype:generate -DinteractiveMode=false -DarchetypeGroupId=io.helidon.archetypes -DarchetypeArtifactId=helidon-quickstart-mp -DarchetypeVersion=2.2.0 -DgroupId=org.jacis.examples -DartifactId=jacis-resourcemanager-demo -Dpackage=org.jacis.examples.resourcemanager
+mvn -U archetype:generate -DinteractiveMode=false -DarchetypeGroupId=io.helidon.archetypes -DarchetypeArtifactId=helidon-quickstart-mp -DarchetypeVersion=2.2.0 -DgroupId=org.jacis.examples -DartifactId=jacis-hostel-demo -Dpackage=org.jacis.examples.hostel
 ```
 
 ## Build and run

@@ -1,4 +1,4 @@
-package org.jacis.examples.resourcemanager.resource.boundary;
+package org.jacis.examples.hostel.room;
 
 import java.util.List;
 
@@ -10,26 +10,24 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.jacis.examples.resourcemanager.resource.entity.Resource;
-
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-@Path("resources")
-public class ResourceEndpoint {
+@Path("rooms")
+public class RoomResource {
 
   @Inject
-  Resources resources;
+  RoomStore store;
 
   @GET
   @Path("{id}")
-  public Resource find(@PathParam("id") long registrationId) {
-    return resources.find(registrationId);
+  public Room find(@PathParam("id") long id) {
+    return store.getReadOnly(id);
   }
 
   @GET
   @Path("all")
-  public List<Resource> all() {
-    return resources.all();
+  public List<Room> all() {
+    return store.getAllReadOnly();
   }
 
 }
