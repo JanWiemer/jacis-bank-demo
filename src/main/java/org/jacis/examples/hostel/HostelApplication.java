@@ -14,9 +14,14 @@ import io.helidon.microprofile.server.Server;
 @ApplicationPath("/")
 public class HostelApplication extends Application {
 
+  private HostelApplication() {
+    // do not construct
+  }
+
   public static void main(String... args) {
-    Server server = Server.builder().addApplication(HostelApplication.class).port(9080).build();
+    Server server = Server.builder().addApplication(HostelApplication.class).build();
     server.start();
+    System.out.println("Hostel Demo Application is running an listening on port " + server.port());
   }
 
   @Override
