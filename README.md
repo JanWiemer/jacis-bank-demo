@@ -1,2 +1,2 @@
-# jacis-resourcemanager-demo
-Sample application using the JACIS project to store reservations on different objects.
+# jacis-hostel-demo
+Sample application using the JACIS project to store hostel reservations.
