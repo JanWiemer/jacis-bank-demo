@@ -33,6 +33,14 @@ public class RoomResource {
   }
 
   @GET
+  @Path("add:{id}:{desc}")
+  public Room add(@PathParam("id") long id, @PathParam("desc") String desc) {
+    Room room = new Room(id, 2, true, desc);
+    store.update(room);
+    return room;
+  }
+
+  @GET
   @Path("init")
   public List<Room> initData() {
     store.add(new Room(1, 2, false, "Ground Floor Room 1"));
