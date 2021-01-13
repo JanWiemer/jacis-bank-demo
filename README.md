@@ -1,2 +1,2 @@
 # jacis-hostel-demo
-Sample application using the JACIS project to store hostel reservations.
+Sample application based on *Helidon.MP* using the JACIS project to store hostel reservations.
