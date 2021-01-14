@@ -32,9 +32,8 @@ public class RoomStore {
     log.info("Jacis store initialized: " + store);
   }
 
-  public RoomStore add(Room room) {
-    store.update(room.getId(), room);
-    return this;
+  public boolean containsKey(long id) {
+    return store.containsKey(id);
   }
 
   public Room getReadOnly(long id) {
@@ -53,8 +52,17 @@ public class RoomStore {
     return store.getAllReadOnly();
   }
 
-  public void update(Room room) {
+  public RoomStore update(Room room) {
     store.update(room.getId(), room);
+    return this;
+  }
+
+  public Room remove(long id) {
+    Room room = store.get(id);
+    if (room != null) {
+      store.remove(id);
+    }
+    return room;
   }
 
 }
