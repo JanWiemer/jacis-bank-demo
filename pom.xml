@@ -46,6 +46,16 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>one.microstream</groupId>
+			<artifactId>storage.restservice.sparkjava</artifactId>
+			<version>04.01.00-MS-GA</version>
+		</dependency>
+		<dependency>
+			<groupId>one.microstream</groupId>
+			<artifactId>storage.restclient.app</artifactId>
+			<version>04.01.00-MS-GA</version>
+		</dependency>
+		<dependency>
 			<groupId>jakarta.transaction</groupId>
 			<artifactId>jakarta.transaction-api</artifactId>
 			<scope>provided</scope>
