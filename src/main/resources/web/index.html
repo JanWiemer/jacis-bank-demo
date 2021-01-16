@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Hostel Demo Application</title>
+ </head>
+<body>
+  <p>Add a hostel room:</p>
+
+    <form action="../rooms/add" method="POST">
+	  <table>
+	    <tr>
+	      <td align="right">ID</td>
+	      <td align="left"><input type="number" name="id" /></td>
+	    </tr>
+	    <tr>
+	      <td align="right">Persons</td>
+	      <td align="left"><input type="number" name="persons" /></td>
+	    </tr>
+	    <tr>
+	      <td align="right">Shower</td>
+	      <td align="left"><input type="checkbox" name="shower" /></td>
+	    </tr>
+	  </table>
+      Description: <br/>
+	  <TEXTAREA NAME="description" COLS=30 ROWS=6></TEXTAREA> <br/>
+	  <input type="submit" value="Add / Update" />
+	</form>
+  <!--form action="../rooms/add" method="POST">
+    <label for="id">ID</label>           <input input type="number" name="id" />      
+    <label for="persons">Persons</label> <input input type="number" name="persons" /> 
+    <label for="shower">Shower</label>   <input type="checkbox" name="shower"  /> <br/>
+    Description: <br/>
+    <TEXTAREA NAME="description" COLS=40 ROWS=6></TEXTAREA> <br/>
+    <input type="submit" value="Add / Update" />
+  </form-->
+
+</body>
+</html>

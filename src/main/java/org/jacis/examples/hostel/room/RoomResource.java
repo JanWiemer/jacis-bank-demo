@@ -6,18 +6,16 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("rooms")
 @Transactional()
-@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class RoomResource {
 
   private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(RoomResource.class.getName());
@@ -26,35 +24,28 @@ public class RoomResource {
   RoomStore store;
 
   @GET
-  @Path("{id}")
-  public Room find(@PathParam("id") long id) {
-    return store.getReadOnly(id);
-  }
-
-  @GET
   @Path("all")
   public List<Room> all() {
     return store.getAllReadOnly();
   }
 
   @GET
-  @Path("add:{id}:{desc}")
-  public Room add(@PathParam("id") long id, @PathParam("desc") String desc) {
-    Room room = new Room(id, 2, true, desc);
-    store.update(room);
-    return room;
+  @Path("{id}")
+  public Room find(@PathParam("id") long id) {
+    return store.getReadOnly(id);
   }
 
   @POST
   @Path("add")
-  public Response addRoom(Room room) {
-    try {
-      store.update(room);
-      return Response.ok().status(Response.Status.CREATED).build();
-    } catch (Exception e) {
-      log.info("addRoom failed " + e);
-      return Response.notModified().build();
-    }
+  public Room add( //
+      @FormParam("id") long id, //
+      @FormParam("persons") int persons, //
+      @FormParam("shower") boolean shower, //
+      @FormParam("description") String description) {
+    Room room = new Room(id, persons, shower, description);
+    log.info("add room " + room);
+    store.update(room);
+    return room;
   }
 
   @Path("/{id}")
@@ -64,6 +55,7 @@ public class RoomResource {
     if (!store.containsKey(id)) {
       return Response.ok().status(Response.Status.NO_CONTENT).build();
     }
+    log.info("remove room " + id);
     store.remove(id);
     return Response.notModified().build();
   }
