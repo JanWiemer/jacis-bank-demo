@@ -36,28 +36,34 @@ public class RoomResource {
   }
 
   @POST
-  @Path("add")
-  public Room add( //
+  @Path("update")
+  public void update( //
       @FormParam("id") long id, //
       @FormParam("persons") int persons, //
       @FormParam("shower") boolean shower, //
       @FormParam("description") String description) {
     Room room = new Room(id, persons, shower, description);
-    log.info("add room " + room);
+    log.info("add / uodate room " + room);
     store.update(room);
-    return room;
   }
 
-  @Path("/{id}")
+  @POST
+  @Path("remove")
+  public void remove(@FormParam("id") long id) {
+    log.info("remove room " + id);
+    store.remove(id);
+  }
+
   @DELETE
+  @Path("delete/{id}")
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-  public Response deleteRoom(@PathParam("id") Long id) {
+  public Response delete(@PathParam("id") Long id) {
     if (!store.containsKey(id)) {
       return Response.ok().status(Response.Status.NO_CONTENT).build();
     }
-    log.info("remove room " + id);
+    log.info("delete room " + id);
     store.remove(id);
-    return Response.notModified().build();
+    return Response.accepted().header("refresh", 0).build();
   }
 
   @GET

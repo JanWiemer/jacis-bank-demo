@@ -4,9 +4,9 @@
   <title>Hostel Demo Application</title>
  </head>
 <body>
-  <p>Add a hostel room:</p>
+  <p>Add room:</p>
 
-    <form action="../rooms/add" method="POST">
+    <form action="../rooms/update" autocomplete="off" method="POST">
 	  <table>
 	    <tr>
 	      <td align="right">ID</td>
@@ -22,17 +22,16 @@
 	    </tr>
 	  </table>
       Description: <br/>
-	  <TEXTAREA NAME="description" COLS=30 ROWS=6></TEXTAREA> <br/>
+	  <TEXTAREA NAME="description" COLS=30 ROWS=3></TEXTAREA> <br/>
 	  <input type="submit" value="Add / Update" />
 	</form>
-  <!--form action="../rooms/add" method="POST">
-    <label for="id">ID</label>           <input input type="number" name="id" />      
-    <label for="persons">Persons</label> <input input type="number" name="persons" /> 
-    <label for="shower">Shower</label>   <input type="checkbox" name="shower"  /> <br/>
-    Description: <br/>
-    <TEXTAREA NAME="description" COLS=40 ROWS=6></TEXTAREA> <br/>
-    <input type="submit" value="Add / Update" />
-  </form-->
+    <form action="../rooms/remove" autocomplete="off" method="POST">
+	  <input type="number" name="id" />
+	  <input type="submit" value="Delete"/>
+	</form>
+    
+   
+<iframe style="border: none;" width="800" height="2000" src="../rooms/all"></iframe>
 
 </body>
 </html>
