@@ -25,8 +25,9 @@ public class JacisProvider {
   @Produces
   @ApplicationScoped
   public JacisContainer produceJacisContainer(TransactionManager txManager) {
-    log.info("create JacisContainer...");
-    return new JacisContainer(new JacisJtaAdapter(txManager));
+    JacisContainer container = new JacisContainer(new JacisJtaAdapter(txManager));
+    log.info("created JacisContainer...");
+    return container;
   }
 
   @Produces

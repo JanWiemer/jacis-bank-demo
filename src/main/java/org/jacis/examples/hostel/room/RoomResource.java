@@ -11,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -64,6 +65,39 @@ public class RoomResource {
     log.info("delete room " + id);
     store.remove(id);
     return Response.accepted().header("refresh", 0).build();
+  }
+
+  @GET
+  @Path("allAsHtmlTable")
+  @Produces(MediaType.TEXT_HTML)
+  public String allAsHtmlTable() {
+    StringBuilder b = new StringBuilder();
+    b.append("<table border='1'>");
+    b.append("<tr><th>+/-</th><th>Id</th><th>Beds</th><th>Shower</th><th>Description</th></tr>");
+    // -- add
+    b.append("<form action=\"../rooms/update\" method=\"POST\" autocomplete=\"off\">");
+    b.append(" <td><input type=\"submit\" value=\"+\"/></td>");
+    b.append(" <td><input type=\"number\" name=\"id\" size=\"4\"/></td>");
+    b.append(" <td><input type=\"number\" name=\"persons\" size=\"4\"/></td>");
+    b.append(" <td><input type=\"checkbox\" name=\"shower\"/></td>");
+    b.append(" <td><TEXTAREA NAME=\"description\" COLS=80 ROWS=1></TEXTAREA></td>");
+    b.append("</tr>");
+    b.append("</form>");
+    // -- data
+    for (Room room : store.getAllReadOnly()) {
+      b.append("<tr>");
+      b.append("<form action=\"../rooms/remove\" method=\"POST\">");
+      b.append(" <td><input type=\"submit\" value=\"X\"/>");
+      b.append("     <input type=\"hidden\" name=\"id\" value=\"").append(room.getId()).append("\"/></td>");
+      b.append("</form>");
+      b.append(" <td>").append(room.getId()).append("</td>");
+      b.append(" <td>").append(room.getNumberOfBeds()).append("</td>");
+      b.append(" <td>").append(room.isShower()).append("</td>");
+      b.append(" <td>").append(room.getDescription()).append("</td>");
+      b.append("</tr>");
+    }
+    b.append("</table>");
+    return b.toString();
   }
 
   @GET
