@@ -45,7 +45,7 @@ class BankTest {
   @Test
   void addRoom() {
     Client client = ClientBuilder.newClient();
-    request(client, "add").put(Entity.entity(new Account("001", "Duke Jacis"), MediaType.APPLICATION_JSON));
+    request(client, "add").put(Entity.entity(new Account("001", "Duke Jacis", 0), MediaType.APPLICATION_JSON));
     JsonArray jsonObject = request(client, "all").get(JsonArray.class);
     log.info("result: " + jsonObject);
   }
