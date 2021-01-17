@@ -2,8 +2,15 @@
 <html>
  <head>
   <title>Bank Demo Application</title>
- </head>
- <body>   
+  <h2>Bank Demo Application</h2>
+  </head>
+    <form action="../accounts/rebook" autocomplete="off" method="POST">
+    Rebook <input type="number" name="amount" />
+    from <input type="text" name="fromId" />
+    to <input type="text" name="toId" />
+    <input type="submit" value="Submit"/>
+  </form>
+  <body>   
     <iframe style="border: none;" width="2000" height="4000" src="../accounts/allAsHtmlTable"></iframe>
- </body>
+  </body>
 </html>

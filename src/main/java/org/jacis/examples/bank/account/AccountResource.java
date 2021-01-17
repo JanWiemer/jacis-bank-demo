@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -64,6 +65,28 @@ public class AccountResource {
     log.info("delete account " + id);
     store.remove(id);
     return Response.accepted().header("refresh", 0).build();
+  }
+
+  @POST
+  @Path("rebook")
+  public void rebook( //
+      @FormParam("fromId") String fromId, //
+      @FormParam("toId") String toId, //
+      @FormParam("amount") long amount) {
+    log.info("rebook " + amount + " from " + fromId + " to " + toId);
+    Account accFrom = store.get(fromId);
+    Account accTo = store.get(toId);
+    if (accFrom == null) {
+      throw new WebApplicationException("Source account " + fromId + " not known!", Response.Status.METHOD_NOT_ALLOWED);
+    } else if (accTo == null) {
+      throw new WebApplicationException("Target account " + toId + " not known!", Response.Status.METHOD_NOT_ALLOWED);
+    }
+    try {
+      store.update(accFrom.withdraw(amount));
+      store.update(accTo.deposit(amount));
+    } catch (IllegalArgumentException e) {
+      throw new WebApplicationException("Rebook " + amount + " from " + fromId + " to " + toId + " not allowed!", Response.Status.METHOD_NOT_ALLOWED);
+    }
   }
 
   @GET
