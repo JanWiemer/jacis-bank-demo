@@ -49,4 +49,19 @@ public class Account extends AbstractReadOnlyModeSupportingObject implements Jac
     return this;
   }
 
+  public Account withdraw(long amount) {
+    checkWritable();
+    if (balance - amount < lowerLimit) {
+      throw new IllegalArgumentException("Failed to withdraw " + amount + " from account " + id + "! Balance would frop below limit " + lowerLimit + "!");
+    }
+    balance -= amount;
+    return this;
+  }
+
+  public Account deposit(long amount) {
+    checkWritable();
+    balance += amount;
+    return this;
+  }
+
 }
