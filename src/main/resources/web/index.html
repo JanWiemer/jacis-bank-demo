@@ -3,14 +3,19 @@
  <head>
   <title>Bank Demo Application</title>
   <h2>Bank Demo Application</h2>
-  </head>
-    <form action="../accounts/rebook" autocomplete="off" method="POST">
-    Rebook <input type="number" name="amount" />
-    from <input type="text" name="fromId" />
-    to <input type="text" name="toId" />
-    <input type="submit" value="Submit"/>
-  </form>
+  </head>  
   <body>   
+    <form action="../accounts/rebook" autocomplete="off" method="POST">
+      Rebook <input type="number" name="amount" />
+      from <input type="text" name="fromId" />
+      to <input type="text" name="toId" />
+      <input t ype="submit" value="Submit"/>
+    </form>
+    </br>
+    <account-grid uri="http://localhost:8080/accounts"></account-grid>
+    </br>
     <iframe style="border: none;" width="2000" height="4000" src="../accounts/allAsHtmlTable"></iframe>
+	<footer>(C) Jan Wiemer</footer>
+    <script src="accountGrid.js" type="module"></script>
   </body>
 </html>

@@ -1,0 +1,8 @@
+body {  background-color: #999; }
+button {
+color: #fff;
+background: blue;
+padding: 5px 20px;
+border-radius: 10px;
+border: none;
+}
