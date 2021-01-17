@@ -12,7 +12,7 @@ import org.jacis.container.JacisContainer;
 import org.jacis.examples.bank.account.AccountResource;
 import org.jacis.examples.bank.account.AccountStore;
 import org.jacis.examples.bank.greet.GreetResource;
-import org.jacis.extension.persistence.MicrostreamStorage;
+import org.jacis.extension.persistence.microstream.MicrostreamStorage;
 
 import io.helidon.microprofile.server.Server;
 

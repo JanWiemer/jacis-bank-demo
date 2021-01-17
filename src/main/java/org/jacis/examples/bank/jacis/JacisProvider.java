@@ -6,7 +6,7 @@ import javax.transaction.TransactionManager;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jacis.container.JacisContainer;
-import org.jacis.extension.persistence.MicrostreamStorage;
+import org.jacis.extension.persistence.microstream.MicrostreamStorage;
 import org.jacis.plugin.txadapter.jta.AbstractJacisTransactionAdapterJTA;
 
 import one.microstream.storage.configuration.Configuration;

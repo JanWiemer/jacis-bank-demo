@@ -8,8 +8,8 @@ import javax.inject.Inject;
 
 import org.jacis.container.JacisContainer;
 import org.jacis.container.JacisObjectTypeSpec;
-import org.jacis.extension.persistence.MicrostreamPersistenceAdapter;
-import org.jacis.extension.persistence.MicrostreamStorage;
+import org.jacis.extension.persistence.microstream.MicrostreamPersistenceAdapter;
+import org.jacis.extension.persistence.microstream.MicrostreamStorage;
 import org.jacis.store.JacisStore;
 
 @ApplicationScoped

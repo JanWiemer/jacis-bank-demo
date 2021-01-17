@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>org.jacis</groupId>
 			<artifactId>jacis</artifactId>
-			<version>2.0.0-build20210109-SNAPSHOT</version>
+			<version>2.0.0-build20210117-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
