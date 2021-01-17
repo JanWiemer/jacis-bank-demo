@@ -1,5 +1,5 @@
 
-package org.jacis.examples.hostel;
+package org.jacis.examples.bank;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.spi.CDI;
@@ -24,7 +24,7 @@ class GreetingsTest {
 
   @BeforeAll
   public static void startTheServer() throws Exception {
-    server = Server.create(HostelApplication.class).start();
+    server = Server.create(BankApplication.class).start();
     serverUrl = "http://localhost:" + server.port();
   }
 

@@ -1,5 +1,5 @@
 
-package org.jacis.examples.hostel.greet;
+package org.jacis.examples.bank.greet;
 
 import java.util.concurrent.atomic.AtomicReference;
 

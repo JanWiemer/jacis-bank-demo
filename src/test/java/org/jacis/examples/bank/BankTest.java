@@ -1,5 +1,5 @@
 
-package org.jacis.examples.hostel;
+package org.jacis.examples.bank;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.spi.CDI;
@@ -10,24 +10,24 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.MediaType;
 
-import org.jacis.examples.hostel.room.Room;
-import org.jacis.examples.hostel.room.RoomStore;
+import org.jacis.examples.bank.room.Account;
+import org.jacis.examples.bank.room.AccountStore;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.helidon.microprofile.server.Server;
 
-class RoomsTest {
+class BankTest {
 
-  private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(RoomStore.class.getName());
+  private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(AccountStore.class.getName());
 
   private static Server server;
   private static String serverUrl;
 
   @BeforeAll
   public static void startTheServer() throws Exception {
-    server = Server.create(HostelApplication.class).start();
+    server = Server.create(BankApplication.class).start();
     serverUrl = "http://localhost:" + server.port();
   }
 
@@ -45,7 +45,7 @@ class RoomsTest {
   @Test
   void addRoom() {
     Client client = ClientBuilder.newClient();
-    request(client, "add").put(Entity.entity(new Room(1, 8, false, "TEST-ROOM"), MediaType.APPLICATION_JSON));
+    request(client, "add").put(Entity.entity(new Account("001", "Duke Jacis"), MediaType.APPLICATION_JSON));
     JsonArray jsonObject = request(client, "all").get(JsonArray.class);
     log.info("result: " + jsonObject);
   }

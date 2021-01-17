@@ -1,4 +1,4 @@
-package org.jacis.examples.hostel;
+package org.jacis.examples.bank;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,24 +9,24 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.jacis.container.JacisContainer;
-import org.jacis.examples.hostel.greet.GreetResource;
-import org.jacis.examples.hostel.room.RoomResource;
-import org.jacis.examples.hostel.room.RoomStore;
+import org.jacis.examples.bank.greet.GreetResource;
+import org.jacis.examples.bank.room.AccountResource;
+import org.jacis.examples.bank.room.AccountStore;
 import org.jacis.extension.persistence.MicrostreamStorage;
 
 import io.helidon.microprofile.server.Server;
 
 @ApplicationPath("/")
-public class HostelApplication extends Application {
+public class BankApplication extends Application {
 
-  private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(RoomStore.class.getName());
+  private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(AccountStore.class.getName());
 
   @Inject
   JacisContainer container;
   @Inject
   MicrostreamStorage microstreamStorage;
 
-  private HostelApplication() {
+  private BankApplication() {
     // do not construct
   }
 
@@ -36,16 +36,16 @@ public class HostelApplication extends Application {
   }
 
   public static void main(String... args) {
-    Server server = Server.builder().addApplication(HostelApplication.class).build();
+    Server server = Server.builder().addApplication(BankApplication.class).build();
     server.start();
-    log.info("Hostel Demo Application is running an listening on port " + server.port());
+    log.info("Bank Demo Application is running an listening on port " + server.port());
   }
 
   @Override
   public Set<Class<?>> getClasses() {
     Set<Class<?>> endpoints = new HashSet<>();
     endpoints.add(GreetResource.class);
-    endpoints.add(RoomResource.class);
+    endpoints.add(AccountResource.class);
     return endpoints;
   }
 

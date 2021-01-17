@@ -1,5 +1,6 @@
 
 # 1st stage, build the app
+# 1st stage, build the app
 FROM helidon/jdk11-graalvm-maven:20.2.0 as build
 
 WORKDIR /helidon
@@ -22,8 +23,8 @@ FROM scratch
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
-COPY --from=build /helidon/target/jacis-hostel-demo .
+COPY --from=build /helidon/target/jacis-bank-demo .
 
-ENTRYPOINT ["./jacis-hostel-demo"]
+ENTRYPOINT ["./jacis-bank-demo"]
 
 EXPOSE 8080

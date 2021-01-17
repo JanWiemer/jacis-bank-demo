@@ -17,13 +17,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: jacis-hostel-demo
+  name: jacis-bank-demo
   labels:
-    app: jacis-hostel-demo
+    app: jacis-bank-demo
 spec:
   type: NodePort
   selector:
-    app: jacis-hostel-demo
+    app: jacis-bank-demo
   ports:
   - port: 8080
     targetPort: 8080
@@ -32,21 +32,21 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: jacis-hostel-demo
+  name: jacis-bank-demo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jacis-hostel-demo
+      app: jacis-bank-demo
   template:
     metadata:
       labels:
-        app: jacis-hostel-demo
+        app: jacis-bank-demo
         version: v1
     spec:
       containers:
-      - name: jacis-hostel-demo
-        image: jacis-hostel-demo
+      - name: jacis-bank-demo
+        image: jacis-bank-demo
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

@@ -1,4 +1,4 @@
-package org.jacis.examples.hostel.jacis;
+package org.jacis.examples.bank.jacis;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
