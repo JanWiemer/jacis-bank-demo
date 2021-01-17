@@ -10,8 +10,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.MediaType;
 
-import org.jacis.examples.bank.room.Account;
-import org.jacis.examples.bank.room.AccountStore;
+import org.jacis.examples.bank.account.Account;
+import org.jacis.examples.bank.account.AccountStore;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

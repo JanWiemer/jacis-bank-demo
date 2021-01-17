@@ -1,4 +1,4 @@
-package org.jacis.examples.bank.room;
+package org.jacis.examples.bank.account;
 
 import java.util.List;
 

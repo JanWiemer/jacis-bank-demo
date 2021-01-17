@@ -9,9 +9,9 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.jacis.container.JacisContainer;
+import org.jacis.examples.bank.account.AccountResource;
+import org.jacis.examples.bank.account.AccountStore;
 import org.jacis.examples.bank.greet.GreetResource;
-import org.jacis.examples.bank.room.AccountResource;
-import org.jacis.examples.bank.room.AccountStore;
 import org.jacis.extension.persistence.MicrostreamStorage;
 
 import io.helidon.microprofile.server.Server;

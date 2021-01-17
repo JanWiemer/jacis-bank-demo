@@ -1,4 +1,4 @@
-package org.jacis.examples.bank.room;
+package org.jacis.examples.bank.account;
 
 import java.util.List;
 
@@ -40,8 +40,9 @@ public class AccountResource {
   @Path("update")
   public void update( //
       @FormParam("id") String id, //
-      @FormParam("owner") String owner) {
-    Account account = new Account(id, owner);
+      @FormParam("owner") String owner, //
+      @FormParam("lowerLimit") long lowerLimit) {
+    Account account = new Account(id, owner, lowerLimit);
     log.info("add / uodate account " + account);
     store.update(account);
   }
@@ -101,16 +102,16 @@ public class AccountResource {
   @GET
   @Path("init")
   public List<Account> initData() {
-    store.update(new Account("0001", "Duke Jacis"));
-    store.update(new Account("0002", "Duke Jacis"));
-    store.update(new Account("0003", "Duke Jacis"));
-    store.update(new Account("0004", "Duke Jacis"));
-    store.update(new Account("0005", "Don Heli"));
-    store.update(new Account("0006", "Don Heli"));
-    store.update(new Account("0007", "Don Heli"));
-    store.update(new Account("0008", "Mik Rostream"));
-    store.update(new Account("0009", "Mik Rostream"));
-    store.update(new Account("0010", "Mik Rostream"));
+    store.update(new Account("0001", "Duke Jacis", 0));
+    store.update(new Account("0002", "Duke Jacis", 0));
+    store.update(new Account("0003", "Duke Jacis", 0));
+    store.update(new Account("0004", "Duke Jacis", 0));
+    store.update(new Account("0005", "Don Heli", 0));
+    store.update(new Account("0006", "Don Heli", 0));
+    store.update(new Account("0007", "Don Heli", 0));
+    store.update(new Account("0008", "Mik Rostream", 0));
+    store.update(new Account("0009", "Mik Rostream", 0));
+    store.update(new Account("0010", "Mik Rostream", 0));
     return store.getAll();
   }
 

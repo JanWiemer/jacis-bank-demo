@@ -1,4 +1,4 @@
-package org.jacis.examples.bank.room;
+package org.jacis.examples.bank.account;
 
 import org.jacis.plugin.objectadapter.cloning.JacisCloneable;
 import org.jacis.plugin.readonly.object.AbstractReadOnlyModeSupportingObject;
@@ -10,10 +10,10 @@ public class Account extends AbstractReadOnlyModeSupportingObject implements Jac
   private long lowerLimit;
   private long balance;
 
-  public Account(String id, String owner) {
+  public Account(String id, String owner, long lowerLimit) {
     this.id = id;
     this.owner = owner;
-    this.lowerLimit = 0;
+    this.lowerLimit = lowerLimit;
     this.balance = 0;
   }
 
