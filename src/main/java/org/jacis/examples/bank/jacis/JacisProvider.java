@@ -4,7 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.transaction.TransactionManager;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.jacis.container.JacisContainer;
 import org.jacis.extension.persistence.microstream.MicrostreamStorage;
 import org.jacis.plugin.txadapter.jta.AbstractJacisTransactionAdapterJTA;
@@ -19,9 +19,6 @@ public class JacisProvider {
 
   private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(JacisProvider.class.getName());
 
-  @ConfigProperty(name = "app.startRestServer", defaultValue = "false")
-  boolean startRestServer;
-
   @Produces
   @ApplicationScoped
   public JacisContainer produceJacisContainer(TransactionManager txManager) {
@@ -33,11 +30,13 @@ public class JacisProvider {
   @Produces
   @ApplicationScoped
   public MicrostreamStorage produceMicrostreamStorage() {
+    boolean startRestServer = ConfigProvider.getConfig().getOptionalValue("app.startRestServer", Boolean.class).orElse(false);
     EmbeddedStorageManager storageManager = createMicroStreamStorageManager();
     storageManager.start();
     if (startRestServer) {
       StorageRestService restService = StorageRestServiceResolver.resolve(storageManager);
       restService.start();
+      log.info("Microstream REST service started " + restService);
     }
     MicrostreamStorage storage = new MicrostreamStorage(storageManager);
     log.info("created Microstream Storage...");
