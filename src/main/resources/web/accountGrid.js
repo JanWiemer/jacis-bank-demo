@@ -1,38 +1,68 @@
 import { html, render} from "./lib/lit-html.js";
 
 class AccountView extends HTMLElement {
-        
-  
+          
   constuctor() {
     this.root = this.attachShadow({mode: "open"});
+    this.setAttribute("uri","not set");
+    this.setAttribute("id","ACCOUNT_VIEW");
   }
 
   get uri() {
     return this.getAttribute("uri");
   }
-  
+
   connectedCallback() {
+    this.fetchData();
+  }
+
+  fetchData() {
     console.log('fetch from URI: '+this.uri+"/all");
     fetch(this.uri+"/all").then(response => response.json()).then(json =>  {
       const table = document.createElement('div');
+	  this.childNodes.forEach(c => this.removeChild(c));
       render(this.template(json), table);
       this.appendChild(table);
     });
   }
 
+  delete(e, sender) { 
+    const accountId = e.target.name;
+    const data = new URLSearchParams();
+    data.append("id", accountId);
+    const deleteUrl = sender.uri + "/remove"
+    console.log('POST: '+ deleteUrl);
+    fetch(deleteUrl, {method: 'post',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
+      body: data
+    }).then(_ => {
+	  sender.fetchData();
+	  console.log("Miep");
+	});  
+  }
+  
   template(items) {
     return   html`
     <table border='1'>
       <tr> 
-        <th>Delete</th> 
+        <th>+/-</th> 
         <th>Account Id</th> 
         <th>Account Owner</th>
         <th>Lower Balance Limit</th> 
         <th>Current Balance</th> 
       </tr>
+      <tr> 
+        <form autocomplete="off" action="http://localhost:8080/accounts/update" method="POST" >
+         <td><input type="submit" value="+"/></td>
+         <td><input type="text" name="id" size="16"/></td>
+         <td><input type="text" name="owner" size="16"/></td>
+         <td><input type="number" name="lowerLimit" size="9"/></td>
+         <td><label type="number" name="balance"/>0</td>
+        </form>
+      </tr>
       ${items.map((item) => html`
         <tr> 
-          <td>${item.balance==0 ? html`<button name=${item.id} @click=${this.delete}>X</button>` : '' }</td>
+          <td>${item.balance==0 ? html`<button name=${item.id} @click=${(e) => this.delete(e,this)}>X</button>` : '' }</td>
           <td>${item.id}</td>
           <td>${item.owner}</td>
           <td>${item.lowerLimit}</td>
@@ -41,15 +71,6 @@ class AccountView extends HTMLElement {
     </table>`;
   }
   
-  delete(e) { 
-    const accountId = e.target.name;
-    const deleteUrl = "http://localhost:8080/accounts/remove?id="+accountId
-    console.log('POST: '+ deleteUrl);
-    fetch(deleteUrl, {method: 'post'});  
-  }
-  
-
 }
-
 
 customElements.define('account-grid', AccountView);
