@@ -47,6 +47,7 @@ public class JacisProvider {
     EmbeddedStorageManager storageManager = Configuration.Default() //
         .setBaseDirectory("var/data-dir") //
         .setBackupDirectory("var/backup-dir")//
+        .setDeletionDirectory("var/deletion-dir") //
         .createEmbeddedStorageFoundation() //
         .createEmbeddedStorageManager();
     return storageManager;
