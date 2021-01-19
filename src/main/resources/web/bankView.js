@@ -1,12 +1,16 @@
 import { html, render} from "./lib/lit-html.js";
 
-class AccountView extends HTMLElement {
+class BankView extends HTMLElement {
           
   constuctor() {
     this.root = this.attachShadow({mode: "open"});
     this.setAttribute("uri","not set");
-    this.setAttribute("id","ACCOUNT_VIEW");
+    this.setAttribute("id","BANK_VIEW");
   }
+
+  newId = '';
+  newOwner = '';
+  newLowerLimit = 0;
 
   get uri() {
     return this.getAttribute("uri");
@@ -23,9 +27,31 @@ class AccountView extends HTMLElement {
 	  this.childNodes.forEach(c => this.removeChild(c));
       render(this.template(json), table);
       this.appendChild(table);
+    }).then(_ => {
+      document.getElementById("rebook").addEventListener("click", e=>this.rebook(e) );
     });
   }
 
+  rebook(e) { 
+    e.preventDefault();
+    const amount = document.getElementById("amount").value
+    const fromId = document.getElementById("fromId").value
+    const toId = document.getElementById("toId").value
+    console.log("rebook "+amount+" from "+fromId+" to "+toId);
+    const data = new URLSearchParams();
+    data.append("fromId", fromId);
+    data.append("toId", toId);
+    data.append("amount", amount);
+    const updateUrl = this.uri + "/rebook"
+    console.log('POST: '+ updateUrl);
+    fetch(updateUrl, {method: 'post',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
+      body: data
+    }).then(_ => {
+	  this.fetchData();
+	});  
+  }
+  
   delete(e, sender) { 
     const accountId = e.target.name;
     const data = new URLSearchParams();
@@ -56,16 +82,18 @@ class AccountView extends HTMLElement {
 	});  
   }
   
-  newId = '';
-  newOwner = '';
-  newLowerLimit = 0;
   onInputId = (e) => { this.newId = e.target.value; };
   onInputOwner = (e) => { this.newOwner = e.target.value; };
   onInputLowerLimit = (e) => { this.newLowerLimit = e.target.value; };
 
-
   template(items) {
     return   html`
+    <form autocomplete="off" >
+      <button id="rebook" type="submit">Rebook</button>
+      <input type="number" id="amount" /> from 
+      <input type="text" id="fromId" /> to 
+      <input type="text" id="toId" /> 
+    </form>
     <table border='1'>
       <tr> 
         <th>+/-</th> 
@@ -96,4 +124,4 @@ class AccountView extends HTMLElement {
   
 }
 
-customElements.define('account-grid', AccountView);
+customElements.define('bank-view', BankView);

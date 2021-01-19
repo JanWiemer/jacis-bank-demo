@@ -1,8 +1,3 @@
-body {  background-color: #999; }
-button {
-color: #fff;
-background: blue;
-padding: 5px 20px;
-border-radius: 10px;
-border: none;
-}
+body {  background-color: #EEE;  }
+table {  background-color: #DDD; }
+button {  background-color: #999; }

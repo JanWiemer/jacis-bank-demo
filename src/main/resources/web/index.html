@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="styles.css">
   <title>Bank Demo Application</title>
-  <script src="accountGrid.js" type="module"></script>
 </head>
 <body>
 
   <h2>Bank Demo Application</h2>
 
-  <form action="../accounts/rebook" autocomplete="off" method="POST">
-    Rebook <input type="number" name="amount" /> from <input type="text" name="fromId" /> to <input type="text" name="toId" /> <input type="submit" value="Submit" />
-  </form>
-
-  <account-grid uri="http://localhost:8080/accounts"></account-grid>
+  <bank-view uri="http://localhost:8080/accounts"></bank-view>
   
   <footer>(C) Jan Wiemer</footer>
-
+  <script src="bankView.js" type="module"></script>
 </body>
 </html>
