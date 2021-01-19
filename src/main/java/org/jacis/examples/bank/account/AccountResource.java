@@ -11,7 +11,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -87,39 +86,6 @@ public class AccountResource {
     } catch (IllegalArgumentException e) {
       throw new WebApplicationException("Rebook " + amount + " from " + fromId + " to " + toId + " not allowed!", Response.Status.METHOD_NOT_ALLOWED);
     }
-  }
-
-  @GET
-  @Path("allAsHtmlTable")
-  @Produces(MediaType.TEXT_HTML)
-  public String allAsHtmlTable() {
-    StringBuilder b = new StringBuilder();
-    b.append("<table border='1'>");
-    b.append("<tr><th>+/-</th><th>Id</th><th>Owner</th><th>Lower Limit</th><th>Balance</th></tr>");
-    // -- add
-    b.append("<form action=\"../accounts/update\" method=\"POST\" autocomplete=\"off\">");
-    b.append(" <td><input type=\"submit\" value=\"+\"/></td>");
-    b.append(" <td><input type=\"text\" name=\"id\" size=\"16\"/></td>");
-    b.append(" <td><input type=\"text\" name=\"owner\" size=\"4\"/></td>");
-    b.append(" <td><input type=\"number\" name=\"lowerLimit\"/></td>");
-    b.append(" <td><label type=\"number\" name=\"balance\"/></td>");
-    b.append("</tr>");
-    b.append("</form>");
-    // -- data
-    for (Account room : store.getAllReadOnly()) {
-      b.append("<tr>");
-      b.append("<form action=\"../accounts/remove\" method=\"POST\">");
-      b.append(" <td><input type=\"submit\" value=\"X\"/>");
-      b.append("     <input type=\"hidden\" name=\"id\" value=\"").append(room.getId()).append("\"/></td>");
-      b.append("</form>");
-      b.append(" <td>").append(room.getId()).append("</td>");
-      b.append(" <td>").append(room.getOwner()).append("</td>");
-      b.append(" <td>").append(room.getLowerLimit()).append("</td>");
-      b.append(" <td>").append(room.getBalance()).append("</td>");
-      b.append("</tr>");
-    }
-    b.append("</table>");
-    return b.toString();
   }
 
   @GET

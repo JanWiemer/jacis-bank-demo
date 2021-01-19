@@ -37,10 +37,33 @@ class AccountView extends HTMLElement {
       body: data
     }).then(_ => {
 	  sender.fetchData();
-	  console.log("Miep");
+	});  
+  }
+
+  update(e, sender) {
+    console.log('newId: '+ sender.newId);
+    const data = new URLSearchParams();
+    data.append("id", this.newId);
+    data.append("owner", this.newOwner);
+    data.append("lowerLimit", this.newLowerLimit);
+    const updateUrl = sender.uri + "/update"
+    console.log('POST: '+ updateUrl+ " target:"+e.target);
+    fetch(updateUrl, {method: 'post',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
+      body: data
+    }).then(_ => {
+	  sender.fetchData();
 	});  
   }
   
+  newId = '';
+  newOwner = '';
+  newLowerLimit = 0;
+  onInputId = (e) => { this.newId = e.target.value; };
+  onInputOwner = (e) => { this.newOwner = e.target.value; };
+  onInputLowerLimit = (e) => { this.newLowerLimit = e.target.value; };
+
+
   template(items) {
     return   html`
     <table border='1'>
@@ -52,11 +75,11 @@ class AccountView extends HTMLElement {
         <th>Current Balance</th> 
       </tr>
       <tr> 
-        <form autocomplete="off" action="http://localhost:8080/accounts/update" method="POST" >
-         <td><input type="submit" value="+"/></td>
-         <td><input type="text" name="id" size="16"/></td>
-         <td><input type="text" name="owner" size="16"/></td>
-         <td><input type="number" name="lowerLimit" size="9"/></td>
+        <form autocomplete="off">         
+         <td><button type="submit" @click=${(e) => this.update(e,this)}>+</button></td>
+         <td><input type="text" name="id" size="16" @input=${this.onInputId}/></td>
+         <td><input type="text" name="owner" size="16" @input=${this.onInputOwner}/></td>
+         <td><input type="number" name="lowerLimit" size="9" @input=${this.onInputLowerLimit}/></td>
          <td><label type="number" name="balance"/>0</td>
         </form>
       </tr>
