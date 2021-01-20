@@ -11,9 +11,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.jacis.examples.bank.BankApplicationException;
 
 @Path("accounts")
 @Transactional()
@@ -76,15 +77,15 @@ public class AccountResource {
     Account accFrom = store.get(fromId);
     Account accTo = store.get(toId);
     if (accFrom == null) {
-      throw new WebApplicationException("Source account " + fromId + " not known!", Response.Status.METHOD_NOT_ALLOWED);
+      throw new BankApplicationException("Source account " + fromId + " not known!");
     } else if (accTo == null) {
-      throw new WebApplicationException("Target account " + toId + " not known!", Response.Status.METHOD_NOT_ALLOWED);
+      throw new BankApplicationException("Target account " + toId + " not known!");
     }
     try {
       store.update(accFrom.withdraw(amount));
       store.update(accTo.deposit(amount));
     } catch (IllegalArgumentException e) {
-      throw new WebApplicationException("Rebook " + amount + " from " + fromId + " to " + toId + " not allowed!", Response.Status.METHOD_NOT_ALLOWED);
+      throw new BankApplicationException("Rebook " + amount + " from " + fromId + " to " + toId + " not allowed!");
     }
   }
 

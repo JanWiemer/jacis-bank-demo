@@ -8,6 +8,7 @@ class BankView extends HTMLElement {
     this.setAttribute("id","BANK_VIEW");
   }
 
+  errorMessage = '';
   newId = '';
   newOwner = '';
   newLowerLimit = 0;
@@ -34,53 +35,74 @@ class BankView extends HTMLElement {
 
   rebook(e) { 
     e.preventDefault();
+    const accView = this;
     const amount = document.getElementById("amount").value
     const fromId = document.getElementById("fromId").value
     const toId = document.getElementById("toId").value
-    console.log("rebook "+amount+" from "+fromId+" to "+toId);
     const data = new URLSearchParams();
     data.append("fromId", fromId);
     data.append("toId", toId);
     data.append("amount", amount);
     const updateUrl = this.uri + "/rebook"
-    console.log('POST: '+ updateUrl);
     fetch(updateUrl, {method: 'post',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
       body: data
+    }).then(function(response) {
+      accView.handleErrorResponse("rebook", response);
     }).then(_ => {
 	  this.fetchData();
-	});  
+    });  
   }
-  
+
   delete(e, sender) { 
+    const accView = this;
     const accountId = e.target.name;
     const data = new URLSearchParams();
     data.append("id", accountId);
     const deleteUrl = sender.uri + "/remove"
-    console.log('POST: '+ deleteUrl);
     fetch(deleteUrl, {method: 'post',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
       body: data
+    }).then(function(response) {
+      accView.handleErrorResponse("delete", response);
     }).then(_ => {
 	  sender.fetchData();
 	});  
   }
 
   update(e, sender) {
-    console.log('newId: '+ sender.newId);
+    const accView = this;
     const data = new URLSearchParams();
     data.append("id", this.newId);
     data.append("owner", this.newOwner);
     data.append("lowerLimit", this.newLowerLimit);
     const updateUrl = sender.uri + "/update"
-    console.log('POST: '+ updateUrl+ " target:"+e.target);
     fetch(updateUrl, {method: 'post',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
       body: data
+    }).then(function(response) {
+      accView.handleErrorResponse("update", response);
     }).then(_ => {
 	  sender.fetchData();
 	});  
   }
+
+
+  handleErrorResponse(prefix, response) { 
+    const accView = this;
+    if(200 <= response.status && response.status < 300) {
+      accView.errorMessage = prefix + ": SUCCESS ("+response.status+")";	
+    } else {
+      response.text().then(function(text) {
+	    if(text) {
+          accView.errorMessage = prefix + ": " + text;
+        } else {
+          accView.errorMessage = prefix + ": " + response.status + " ("+response.statusText+")";
+        }
+      });
+    }
+  }
+  
   
   onInputId = (e) => { this.newId = e.target.value; };
   onInputOwner = (e) => { this.newOwner = e.target.value; };
@@ -88,6 +110,7 @@ class BankView extends HTMLElement {
 
   template(items) {
     return   html`
+    <label id="error">${this.errorMessage}</label>
     <form autocomplete="off" >
       <button id="rebook" type="submit">Rebook</button>
       <input type="number" id="amount" /> from 
