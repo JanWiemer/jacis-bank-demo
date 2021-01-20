@@ -11,7 +11,6 @@ import javax.ws.rs.core.Application;
 import org.jacis.container.JacisContainer;
 import org.jacis.examples.bank.account.AccountResource;
 import org.jacis.examples.bank.account.AccountStore;
-import org.jacis.examples.bank.greet.GreetResource;
 import org.jacis.extension.persistence.microstream.MicrostreamStorage;
 
 import io.helidon.microprofile.server.Server;
@@ -44,7 +43,6 @@ public class BankApplication extends Application {
   @Override
   public Set<Class<?>> getClasses() {
     Set<Class<?>> endpoints = new HashSet<>();
-    endpoints.add(GreetResource.class);
     endpoints.add(AccountResource.class);
     return endpoints;
   }
