@@ -38,6 +38,9 @@ public class BankApplication extends Application {
     Server server = Server.builder().addApplication(BankApplication.class).build();
     server.start();
     log.info("Bank Demo Application is running an listening on port " + server.port());
+    log.info("--------------------------------------------");
+    log.info("connect with: http://localhost:" + server.port() + "/bank/");
+    log.info("--------------------------------------------");
   }
 
   @Override
