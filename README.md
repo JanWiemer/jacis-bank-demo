@@ -1,2 +1,4 @@
 # jacis-bank-demo
 The typical example for transactions is transferring money from one account to antther. Therefore the sample application based on [Helidon.MP](https://helidon.io/docs/latest/#/mp/introduction/01_introduction) using the [JACIS](https://github.com/JanWiemer/jacis/wiki) project stores bank account balances.
+
+Note that the maven file included in the project refers a maven repository hosted at gitHub: "https://maven.pkg.github.com/janwiemer/jacis". This repository requires an autentification with the user name "JanWiemer" and the password / token / githubPAT "654f72dbc23aaeb0606c5fbff98c0a6e1406a506". Using maven this information is usually put to a maven settings file. An example maven configuration can be found in the [Installation chapter](https://github.com/JanWiemer/jacis/wiki/Installation) in the JACIS documentation.
