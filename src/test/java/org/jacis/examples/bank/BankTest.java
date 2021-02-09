@@ -32,7 +32,7 @@ class BankTest {
   }
 
   private Builder request(Client client, String path) {
-    return client.target(serverUrl).path("rooms/" + path).request();
+    return client.target(serverUrl).path("accounts/" + path).request();
   }
 
   @Test
