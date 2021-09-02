@@ -10,9 +10,9 @@ import org.jacis.extension.persistence.microstream.MicrostreamStorage;
 import org.jacis.plugin.txadapter.jta.AbstractJacisTransactionAdapterJTA;
 
 import one.microstream.storage.configuration.Configuration;
-import one.microstream.storage.restservice.StorageRestService;
-import one.microstream.storage.restservice.StorageRestServiceResolver;
-import one.microstream.storage.types.EmbeddedStorageManager;
+import one.microstream.storage.embedded.types.EmbeddedStorageManager;
+import one.microstream.storage.restservice.types.StorageRestService;
+import one.microstream.storage.restservice.types.StorageRestServiceResolver;
 
 @ApplicationScoped
 public class JacisProvider {
